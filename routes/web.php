@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MasyarakatController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PetugasController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +20,19 @@ use App\Http\Controllers\MasyarakatController;
 
 
 
-Route::get('/register', [MasyarakatController::class, 'registerView']);
-Route::post('/registerProses', [MasyarakatController::class, 'prosesRegister']);
-Route::get('/login', [MasyarakatController::class, 'loginView'])->name('login');
-Route::post('/loginProses', [MasyarakatController::class, 'loginProses']);
-Route::get('/logout', [MasyarakatController::class, 'logout']);
+Route::get('/register', [AuthController::class, 'registerView'])->name('register');
+Route::post('/registerProses', [AuthController::class, 'prosesRegister']);
+Route::get('/login', [AuthController::class, 'loginView'])->name('login');
+Route::post('/loginProses', [AuthController::class, 'loginProses']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::get('/home', function () {
+Route::middleware('auth:petugas', 'admin')->prefix('admin')->group(function(){
+    Route::get('/', [PetugasController::class, 'adminHome']);
+});
+
+Route::get('/home', function(){
     return view('welcome');
-})->name('home')->middleware('auth:masyarakat');
+})->name('masyarakat')->middleware('auth:masyarakat');
+
 

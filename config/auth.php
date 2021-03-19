@@ -90,6 +90,7 @@ return [
         'petugas' => [
             'driver' => 'eloquent',
             'model' => App\Models\Petugas::class,
+            'hash' => false,
         ],
 
         // 'users' => [

@@ -1,131 +1,67 @@
-@extends('adminlte::auth.auth-page', ['auth_type' => 'register'])
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Registrasi Akun Masyarakat</title>
 
-@section('auth_header', __('adminlte::adminlte.register_message'))
+    <!-- Bootstrap core CSS -->
+<link href="{{ asset('vendor') }}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-@php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
-@php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
-@php( $password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset') )
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
 
-@if (config('adminlte.use_route_url', false))
-    @php( $login_url = $login_url ? route($login_url) : '' )
-    @php( $register_url = $register_url ? route($register_url) : '' )
-    @php( $password_reset_url = $password_reset_url ? route($password_reset_url) : '' )
-@else
-    @php( $login_url = $login_url ? url($login_url) : '' )
-    @php( $register_url = $register_url ? url($register_url) : '' )
-    @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
-@endif
-@section('auth_body')
-    <form action="/registerProses" method="post">
-        {{ csrf_field() }}
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
 
-        {{-- Name field --}}
-        <div class="input-group mb-3">
-            <input type="text" name="nik" class="form-control {{ $errors->has('nik') ? 'is-invalid' : '' }}"
-                   value="{{ old('nik') }}" placeholder="Masukkan NIK" autofocus>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('nik'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('nik') }}</strong>
-                </div>
-            @endif
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" name="nama" class="form-control {{ $errors->has('nama') ? 'is-invalid' : '' }}"
-                   value="{{ old('nama') }}" placeholder="Masukkan nama" autofocus>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('nama'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('nama') }}</strong>
-                </div>
-            @endif
-        </div>
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('vendor') }}/bootstrap/examples/sign-in/signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<form class="form-signin" action="/registerProses" method="POST">
+    @csrf
+  <img class="mb-4" src="{{ asset('vendor') }}/bootstrap/examples/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
 
-        <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-                   value="{{ old('username') }}" placeholder="Masukkan username" autofocus>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('username'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('username') }}</strong>
-                </div>
-            @endif
-        </div>
+  <label for="" class="sr-only">NIK</label>
+  <input type="text" name="nik" id="nik" class="form-control" placeholder="Masukkan nik" required autofocus>
 
-        {{-- Password field --}}
-        <div class="input-group mb-3">
-            <input type="password" name="password"
-                   class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                   placeholder="Buat password">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('password'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </div>
-            @endif
-        </div>
+  <label for="" class="sr-only">Nama</label>
+  <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama Lengkap" required>
 
-        {{-- Confirm password field --}}
-        <div class="input-group mb-3">
-            <input type="password" name="password_confirmation"
-                   class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
-                   placeholder="Konfirmasi password">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('password_confirmation'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                </div>
-            @endif
-        </div>
+  <label for="" class="sr-only">Username</label>
+  <input type="text" name="username" id="username" class="form-control" placeholder="Masukkan Username" required>
 
-        <div class="input-group mb-3">
-            <input type="number" name="telp" class="form-control {{ $errors->has('telp') ? 'is-invalid' : '' }}"
-                   value="{{ old('telp') }}" placeholder="Masukkan no telepon anda" autofocus>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('telp'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('telp') }}</strong>
-                </div>
-            @endif
-        </div>
+  <label for="" class="sr-only">Telp</label>
+  <input type="text" name="telp" id="telp" class="form-control" placeholder="Telepon" required>
 
-        {{-- Register button --}}
-        <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
-            <span class="fas fa-user-plus"></span>
-            {{ __('adminlte::adminlte.register') }}
-        </button>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-    </form>
-@stop
+  
 
-@section('auth_footer')
-    <p class="my-0">
-        <a href="{{ $login_url }}">
-            {{ __('adminlte::adminlte.i_already_have_a_membership') }}
-        </a>
-    </p>
-@stop
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+  <p class="mt-5 mb-3 text-muted">Sudah punya akun?<a href="{{ route('login') }}">LOGIN</a></p>
+  <p class="mt-5 mb-3 text-muted">&copy; Dwi Candra UKK</p>
+</form>
+
+
+    
+  </body>
+</html>
