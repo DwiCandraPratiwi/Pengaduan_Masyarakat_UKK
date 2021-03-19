@@ -29,6 +29,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth:petugas', 'admin')->prefix('admin')->group(function(){
     Route::get('/', [PetugasController::class, 'adminHome']);
+    Route::resource('petugas', PetugasController::class);
 });
 
 Route::get('/home', function(){
